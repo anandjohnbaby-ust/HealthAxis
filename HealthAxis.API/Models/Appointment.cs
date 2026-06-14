@@ -11,27 +11,27 @@ namespace HealthAxis.API.Models
         [Key]
         public int AppointmentId { get; set; }
 
-        [Required(ErrorMessage = Constants.PatientRequired)]
+        [Required(ErrorMessage = ValidationMessages.PatientRequired)]
         public int PatientId { get; set; }
 
-        [Required(ErrorMessage = Constants.DoctorRequired)]
+        [Required(ErrorMessage = ValidationMessages.DoctorRequired)]
         public int DoctorId { get; set; }
 
-        [Required(ErrorMessage = Constants.AppointmentDateRequired)]
+        [Required(ErrorMessage = ValidationMessages.AppointmentDateRequired)]
         [DataType(DataType.Date)]
         [CustomValidation(
             typeof(Appointment),
             nameof(ValidateScheduledDate))]
         public DateTime ScheduledDate { get; set; }
 
-        [Required(ErrorMessage = Constants.TimeSlotRequired)]
+        [Required(ErrorMessage = ValidationMessages.TimeSlotRequired)]
         [StringLength(
             ValidationLimits.TimeSlotLength,
-            ErrorMessage = Constants.InvalidTimeSlot)]
+            ErrorMessage = ValidationMessages.InvalidTimeSlot)]
         public string TimeSlot { get; set; } = string.Empty;
 
         [Required(
-            ErrorMessage = Constants.AppointmentStatusRequired)]
+            ErrorMessage = ValidationMessages.AppointmentStatusRequired)]
         public AppointmentStatus Status { get; set; }
             = AppointmentStatus.Pending;
 
@@ -103,7 +103,7 @@ namespace HealthAxis.API.Models
             {
 
                 return new ValidationResult(
-                    Constants.ScheduledDateCannotBePast);
+                    ValidationMessages.ScheduledDateCannotBePast);
             }
 
             return ValidationResult.Success;

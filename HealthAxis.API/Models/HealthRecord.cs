@@ -10,24 +10,24 @@ namespace HealthAxis.API.Models
         [Key]
         public int RecordId { get; set; }
 
-        [Required(ErrorMessage = Constants.AppointmentRequired)]
+        [Required(ErrorMessage = ValidationMessages.AppointmentRequired)]
         public int AppointmentId { get; set; }
 
-        [Required(ErrorMessage = Constants.PatientRequired)]
+        [Required(ErrorMessage = ValidationMessages.PatientRequired)]
         public int PatientId { get; set; }
 
-        [Required(ErrorMessage = Constants.DoctorRequired)]
+        [Required(ErrorMessage = ValidationMessages.DoctorRequired)]
         public int DoctorId { get; set; }
 
-        [Required(ErrorMessage = Constants.VisitDateRequired)]
+        [Required(ErrorMessage = ValidationMessages.VisitDateRequired)]
         [DataType(DataType.Date)]
         public DateTime VisitDate { get; set; }
 
-        [Required(ErrorMessage = Constants.DiagnosisRequired)]
+        [Required(ErrorMessage = ValidationMessages.DiagnosisRequired)]
         [StringLength(ValidationLimits.DiagnosisLength)]
         public string Diagnosis { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = Constants.PrescriptionRequired)]
+        [Required(ErrorMessage = ValidationMessages.PrescriptionRequired)]
         [StringLength(ValidationLimits.PrescriptionLength)]
         public string Prescription { get; set; } = string.Empty;
 

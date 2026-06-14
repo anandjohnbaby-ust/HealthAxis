@@ -1,8 +1,7 @@
 ﻿namespace HealthAxis.API.Utilities
 {
-    public static class Constants
+    public static class ValidationMessages
     {
-        #region Validation Messages
 
         public const string FullNameRequired = "Full Name is required.";
 
@@ -68,6 +67,5 @@
 
         public const string AppointmentRequired = "Appointment details are required.";
 
-        #endregion
     }
 }

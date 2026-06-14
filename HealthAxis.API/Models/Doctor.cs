@@ -1,73 +1,73 @@
-﻿using HealthAxis.API.Enums;
-using HealthAxis.API.Utilities;
-using System.ComponentModel.DataAnnotations;
+﻿    using HealthAxis.API.Enums;
+    using HealthAxis.API.Utilities;
+    using System.ComponentModel.DataAnnotations;
 
-namespace HealthAxis.API.Models
-{
-    public class Doctor
+    namespace HealthAxis.API.Models
     {
-        [Key]
-        public int DoctorId { get; set; }
-
-        [Required(ErrorMessage = Constants.FullNameRequired)]
-        [StringLength(ValidationLimits.FullNameLength)]
-        [RegularExpression(
-            RegexPatterns.FullName,
-            ErrorMessage = Constants.InvalidFullNameFormat)]
-        public string FullName { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = Constants.SpecialisationRequired)]
-        public Specialisation Specialisation { get; set; }
-
-        [Range(
-            ValidationLimits.MinExperience,
-            ValidationLimits.MaxExperience,
-            ErrorMessage = Constants.InvalidExperienceRange)]
-        public int YearsOfExperience { get; set; }
-
-        [Range(
-            typeof(decimal),
-            ValidationLimits.MinConsultationFee,
-            ValidationLimits.MaxConsultationFee,
-            ErrorMessage = Constants.InvalidConsultationFee)]
-        public decimal ConsultationFee { get; set; }
-
-        public bool IsActive { get; set; } = true;
-
-        // Navigation Properties
-        public virtual ICollection<Appointment> Appointments { get; set; }
-            = new List<Appointment>();
-
-        public virtual ICollection<HealthRecord> HealthRecords { get; set; }
-            = new List<HealthRecord>();
-
-        public bool IsAvailable(
-            DateTime scheduledDate,
-            string timeSlot)
+        public class Doctor
         {
+            [Key]
+            public int DoctorId { get; set; }
 
-            return !Appointments.Any(a =>
-                a.ScheduledDate.Date == scheduledDate.Date &&
-                a.TimeSlot == timeSlot &&
-                a.Status != AppointmentStatus.Cancelled);
-        }
+            [Required(ErrorMessage = ValidationMessages.FullNameRequired)]
+            [StringLength(ValidationLimits.FullNameLength)]
+            [RegularExpression(
+                RegexPatterns.FullName,
+                ErrorMessage = ValidationMessages.InvalidFullNameFormat)]
+            public string FullName { get; set; } = string.Empty;
 
-        public int GetUpcomingAppointmentCount()
-        {
+            [Required(ErrorMessage = ValidationMessages.SpecialisationRequired)]
+            public Specialisation Specialisation { get; set; }
 
-            return Appointments.Count(a =>
-                a.ScheduledDate.Date >= DateTime.Today &&
-                a.Status != AppointmentStatus.Cancelled);
-        }
+            [Range(
+                ValidationLimits.MinExperience,
+                ValidationLimits.MaxExperience,
+                ErrorMessage = ValidationMessages.InvalidExperienceRange)]
+            public int YearsOfExperience { get; set; }
+
+            [Range(
+                typeof(decimal),
+                ValidationLimits.MinConsultationFee,
+                ValidationLimits.MaxConsultationFee,
+                ErrorMessage = ValidationMessages.InvalidConsultationFee)]
+            public decimal ConsultationFee { get; set; }
+
+            public bool IsActive { get; set; } = true;
+
+            // Navigation Properties
+            public virtual ICollection<Appointment> Appointments { get; set; }
+                = new List<Appointment>();
+
+            public virtual ICollection<HealthRecord> HealthRecords { get; set; }
+                = new List<HealthRecord>();
+
+            public bool IsAvailable(
+                DateTime scheduledDate,
+                string timeSlot)
+            {
+
+                return !Appointments.Any(a =>
+                    a.ScheduledDate.Date == scheduledDate.Date &&
+                    a.TimeSlot == timeSlot &&
+                    a.Status != AppointmentStatus.Cancelled);
+            }
+
+            public int GetUpcomingAppointmentCount()
+            {
+
+                return Appointments.Count(a =>
+                    a.ScheduledDate.Date >= DateTime.Today &&
+                    a.Status != AppointmentStatus.Cancelled);
+            }
             
-        public void Activate()
-        {
-            IsActive = true;
-        }
+            public void Activate()
+            {
+                IsActive = true;
+            }
 
-        public void Deactivate()
-        {
-            IsActive = false;
+            public void Deactivate()
+            {
+                IsActive = false;
+            }
         }
     }
-}

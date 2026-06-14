@@ -11,29 +11,29 @@ namespace HealthAxis.API.Models
         [Key]
         public int PatientId { get; set; }
 
-        [Required(ErrorMessage = Constants.FullNameRequired)]
+        [Required(ErrorMessage = ValidationMessages.FullNameRequired)]
         [StringLength(ValidationLimits.FullNameLength)]
-        [RegularExpression(RegexPatterns.FullName, ErrorMessage = Constants.InvalidFullNameFormat)]
+        [RegularExpression(RegexPatterns.FullName, ErrorMessage = ValidationMessages.InvalidFullNameFormat)]
         public string FullName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = Constants.DateOfBirthRequired)]
+        [Required(ErrorMessage = ValidationMessages.DateOfBirthRequired)]
         [DataType(DataType.Date)]
         [CustomValidation(
             typeof(Patient),
             nameof(ValidateDateOfBirth))]
         public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = Constants.GenderRequired)]
+        [Required(ErrorMessage = ValidationMessages.GenderRequired)]
         public Gender Gender { get; set; }
 
-        [Required(ErrorMessage = Constants.PhoneNumberRequired)]
+        [Required(ErrorMessage = ValidationMessages.PhoneNumberRequired)]
         [StringLength(ValidationLimits.PhoneNumberLength)]
-        [RegularExpression(RegexPatterns.PhoneNumber, ErrorMessage = Constants.InvalidPhoneNumberFormat)]
+        [RegularExpression(RegexPatterns.PhoneNumber, ErrorMessage = ValidationMessages.InvalidPhoneNumberFormat)]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = Constants.EmailRequired)]
+        [Required(ErrorMessage = ValidationMessages.EmailRequired)]
         [EmailAddress(
-            ErrorMessage = Constants.InvalidEmailFormat)]
+            ErrorMessage = ValidationMessages.InvalidEmailFormat)]
         [StringLength(ValidationLimits.EmailLength)]
         public string Email { get; set; } = string.Empty;
 
@@ -67,13 +67,13 @@ namespace HealthAxis.API.Models
             if (date.Year < 1900)
             {
                 return new ValidationResult(
-                    Constants.DateOfBirthYearMustBe1900OrLater);
+                    ValidationMessages.DateOfBirthYearMustBe1900OrLater);
             }
 
             if (date > DateTime.Today)
             {
                 return new ValidationResult(
-                    Constants.DateOfBirthCannotBeFuture);
+                    ValidationMessages.DateOfBirthCannotBeFuture);
             }
 
             return ValidationResult.Success;
